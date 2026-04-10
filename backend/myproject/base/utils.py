@@ -1,7 +1,11 @@
 import random
+import datetime
 
 
 def get_mood_msg(mood):
+
+    hour= datetime.datetime.now().hour
+
     messages = {
         "happy": [
             "You're doing amazing! Keep the momentum 🚀",
@@ -27,4 +31,12 @@ def get_mood_msg(mood):
             "Go beyond your limits 🚀"
         ]
     }    
+
+    if mood =='tired'and hour>=23:
+        return "It's late 😴 Proper rest will help you study better tomorrow"
+    
+    if mood =='motivated'and hour<10:
+        return "It's late 😴 Proper rest will help you study better tomorrow"
+    
+
     return random.choice(messages.get(mood, ["Keep going!"]))
