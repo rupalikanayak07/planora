@@ -34,3 +34,4 @@ class MoodSerializer(serializers.ModelSerializer):
     class Meta:
         model=Mood
         fields='__all__'
+        read_only_fields = ['user']

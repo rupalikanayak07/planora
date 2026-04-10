@@ -6,6 +6,7 @@ from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
+from .utils import get_mood_msg
 
 
 # Create your views here.
@@ -96,9 +97,21 @@ def progress(request):
     
 
 
-
+@api_view(['POST'])
 def add_mood(request):
-    return Response("")
+    ser_data=MoodSerializer(data=request.data)
+
+    if ser_data.is_valid():
+        mood_obj=ser_data.save(user=request.user)
+
+        message=get_mood_msg(mood_obj.mood)
+
+        return Response({
+            "mood":mood_obj.mood,
+            "message":message
+        })
+
+    return Response(ser_data.errors)
 
 
 def recommendation(request):
